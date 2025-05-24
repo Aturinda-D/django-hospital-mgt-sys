@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <form method="post" class="bg-light p-4 rounded shadow" style="width: 100%; max-width: 400px;">
+    <h3 class="text-center mb-4">Login</h3>
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+      <input type="text" name="{{ form.username.html_name }}" class="form-control" id="{{ form.username.id_for_label }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+      <input type="password" name="{{ form.password.html_name }}" class="form-control" id="{{ form.password.id_for_label }}" required>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-dark">Login</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
