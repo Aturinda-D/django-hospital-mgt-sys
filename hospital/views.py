@@ -32,7 +32,7 @@ def login_view(request):
 
 # ----- PATIENTS ----- #
 def patients(request):
-    patients = Patient.objects.all()
+    patients = Patient.objects.all().order_by('id')
     return render(request, 'patients.html', {'patients' : patients})
 
 
@@ -52,8 +52,20 @@ def add_patient(request):
 
 
 @login_required
-def update_patient(request):
-    return render(request, 'update_patient.html')
+def update_patient(request, pk):
+    patient = get_object_or_404(Patient, pk=pk)
+    if request.method == "POST":
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Patient data updated successfully!")
+            return redirect("patients")
+        else:
+            messages.error(request, "Failed to update patient data!")
+    else:
+        form = PatientForm(instance=patient)
+
+    return render(request, 'update_patient.html', {'form': form})
 
 
 @login_required
