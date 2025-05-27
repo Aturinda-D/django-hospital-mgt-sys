@@ -25,6 +25,7 @@ def login_view(request):
             messages.error(request, 'Invalid username or password!')
     else:
         form = AuthenticationForm()
+
     return render(request, 'login.html', {'form' : form})
 
 
@@ -75,6 +76,7 @@ def delete_patient(request, pk):
         patient.delete()
         messages.success(request, "Patient deleted successfully!")
         return redirect("patients")
+    
     return render(request, 'confirm_delete.html', {'object': patient, 'type': 'patient'})
 
 
@@ -82,7 +84,7 @@ def delete_patient(request, pk):
 
 # ----- APPOINTMENTS ----- #
 def appointments(request):
-    appointments = Appointment.objects.all()
+    appointments = Appointment.objects.all().order_by('id')
     return render(request, 'appointments.html', {'appointments': appointments})
 
 
@@ -98,12 +100,25 @@ def add_appointment(request):
             messages.error(request, 'Failed to add new appointment.')
     else:
         form = AppointmentForm()
+
     return render(request, 'add_appointment.html', {'form' : form})
 
 
 @login_required
-def update_appointment(request):
-    return render(request, 'update_appointment.html')
+def update_appointment(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == "POST":
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Appointment updated successfully!")
+            return redirect('appointments')
+        else:
+            messages.error(request, "Failed to update appointment!")
+    else:
+        form = AppointmentForm(instance=appointment)
+
+    return render(request, "update_appointment.html", {'form': form})
 
 
 @login_required
