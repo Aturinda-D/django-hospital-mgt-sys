@@ -9,9 +9,9 @@ urlpatterns = [
     path('patients/', patients, name='patients'),
     path('add_patient/', add_patient, name='add_patient'),
     path('update_patient/', update_patient, name='update_patient'),
-    path('delete_patient/', delete_patient, name='delete_patient'),
+    path('delete_patient/<int:pk>', delete_patient, name='delete_patient'),
     path('appointments/', appointments, name='appointments'),
     path('add_appointment/', add_appointment, name='add_appointment'),
     path('update_appointment/', update_appointment, name='update_appointment'),
-    path('delete_appointment/', delete_appointment, name='delete_appointment'),
+    path('delete_appointment/<int:pk>', delete_appointment, name='delete_appointment'),
 ]

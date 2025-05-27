@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -57,8 +57,13 @@ def update_patient(request):
 
 
 @login_required
-def delete_patient(request):
-    return render(request, 'delete_patient.html')
+def delete_patient(request, pk):
+    patient = get_object_or_404(Patient, pk=pk)
+    if request.method == "POST":
+        patient.delete()
+        messages.success(request, "Patient deleted successfully!")
+        return redirect("patients")
+    return render(request, 'confirm_delete.html', {'object': patient, 'type': 'patient'})
 
 
 
@@ -90,5 +95,10 @@ def update_appointment(request):
 
 
 @login_required
-def delete_appointment(request):
-    return render(request, 'delete_appointment.html')
+def delete_appointment(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == 'POST':
+        appointment.delete()
+        messages.success(request, 'Appointment deleted successfully!')
+        return redirect('appointments')
+    return render(request, 'confirm_delete.html', {'object': appointment, 'type': 'appointment'})

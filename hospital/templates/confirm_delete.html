@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+  <div class="card p-5 bg-secondary bg-opacity-25">
+    <h4>Are you sure you want to delete this {{ type }}?</h4>
+    <p><strong>{{ object }}</strong></p>
+    <form class="mt-4" method="post">
+      {% csrf_token %}
+      <a href="{% if type == 'patient' %}{% url 'patients' %}{% else %}{% url 'appointments' %}{% endif %}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    </form>
+  </div>
+{% endblock %}
