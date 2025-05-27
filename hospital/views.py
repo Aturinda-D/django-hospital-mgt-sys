@@ -8,7 +8,9 @@ from .models import Patient, Appointment
 
 # ----- HOME ----- #.
 def home(request):
-    return render(request, 'home.html')
+    patient_count = Patient.objects.count()
+    appointment_count = Appointment.objects.count()
+    return render(request, 'home.html', {'patient_count': patient_count, 'appointment_count': appointment_count})
 
 
 # ----- LOGIN ----- #

@@ -7,4 +7,22 @@
 {% block content %}
     <h1 class="mb-4">Welcome to the Hospital Management System</h1>
     <p>Manage your patients and appointments easily.</p>
+    <div class="row">
+        <div class="col-md-6">
+          <div class="card text-white bg-primary bg-opacity-75 py-4 m-5 text-center shadow">
+            <div class="card-body">
+              <h2 class="card-title display-3 fw-bold">{{ patient_count }}</h2>
+              <h5 class="card-text fst-italic">Patients registered</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-white bg-success bg-opacity-75 py-4 m-5 text-center shadow">
+            <div class="card-body">
+              <h2 class="card-title display-3 fw-bold">{{ appointment_count }}</h2>
+              <h5 class="card-text fst-italic">Appointments scheduled</h5>
+            </div>
+          </div>
+        </div>
+    </div>
 {% endblock %}
